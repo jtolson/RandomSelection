@@ -15,13 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="605133a0-23bf-4dc4-8761-04e0bdbce25b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/unit/ExcelReaderUnitTest.groovy" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RandomSelection.iml" afterPath="$PROJECT_DIR$/RandomSelection.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/com/tci/utilities/ExcelBuilder.groovy" afterPath="$PROJECT_DIR$/src/groovy/com/tci/utilities/ExcelBuilder.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy" afterPath="$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy" afterPath="$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy" />
     </list>
     <ignored path="RandomSelection.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,19 +86,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExcelBuilderTest.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ExcelBuilderTest.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="46" selection-start="350" selection-end="350" vertical-scroll-proportion="0.56842107">
+            <state line="29" column="17" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableDDLBuilder.groovy" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TableDDLBuilder.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="6" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+            <state line="76" column="38" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.6753247">
               <folding />
             </state>
           </provider>
@@ -130,9 +126,9 @@
         <option value="$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.java" />
         <option value="$PROJECT_DIR$/src/groovy/com/tci/utilities/ExcelBuilderTest.groovy" />
         <option value="$PROJECT_DIR$/src/groovy/com/tci/utilities/ExcelBuilder.groovy" />
-        <option value="$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy" />
         <option value="$PROJECT_DIR$/test/utilities/ExcelBuilderTest.groovy" />
         <option value="$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy" />
       </list>
     </option>
   </component>
@@ -531,7 +527,7 @@
       <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328" sideWeight="0.0" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.672" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988507" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -572,7 +568,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mini Work Model&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -585,6 +581,7 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="Mini Work Model&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -613,16 +610,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy">
+    <entry file="file://$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="6" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+        <state line="29" column="17" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/com/tci/utilities/ExcelBuilderTest.groovy">
+    <entry file="file://$PROJECT_DIR$/src/groovy/com/tci/utilities/TableDDLBuilder.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="46" selection-start="350" selection-end="350" vertical-scroll-proportion="0.56842107">
+        <state line="76" column="38" selection-start="2058" selection-end="2058" vertical-scroll-proportion="0.6753247">
           <folding />
         </state>
       </provider>

@@ -26,7 +26,7 @@ public class ExcelBuilderTest {
     {
         ExcelBuilder  a = new ExcelBuilder("/Users/jtolson/ExampleFile.xls")
 
-        def t = new TableDDLBuilder("/Users/jtolson/ExampleFile.xls")
+        def t = new TableDDLBuilder("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
         t.getSpreadSheetValues()
     }
 }

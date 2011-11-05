@@ -47,6 +47,7 @@ class TableDDLBuilder {
 
         def cellValue = []
         def vRow = []
+            def isFirstRow = true
 
             sheet.each() { row ->
             row.each() { cell ->
@@ -74,7 +75,18 @@ class TableDDLBuilder {
          }
 
      println ""
-           println("========================================== Row ==============================================")
+           if (isFirstRow)
+           {
+               isFirstRow = false
+              println("========================================== First Row ==============================================")
+           }
+           else
+           {
+               println("========================================== Row ==============================================")
+
+           }
+
+
             }
 
     }
