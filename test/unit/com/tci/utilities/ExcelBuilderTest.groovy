@@ -24,9 +24,10 @@ public class ExcelBuilderTest {
 
     public void testDDL()
     {
-        ExcelBuilder  a = new ExcelBuilder("/Users/jtolson/ExampleFile.xls")
+        //ExcelBuilder  a = new ExcelBuilder("/Users/jtolson/ExampleFile.xls")
 
         def t = new TableDDLBuilder("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
+        println t.getTableDDL("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
         t.getSpreadSheetValues()
     }
 }

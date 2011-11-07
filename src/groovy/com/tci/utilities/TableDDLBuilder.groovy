@@ -24,6 +24,8 @@ class TableDDLBuilder {
     def theFile
     def cellType = []
     def fieldName = []
+    def tableName = ""
+
 
     TableDDLBuilder(String file)
     {
@@ -34,7 +36,7 @@ class TableDDLBuilder {
         sheet = workbook.getSheetAt(0)
     }
 
-    def getSpreadSheetValues(String file)
+    def getSpreadSheetValues()
     {
 //        def theFile = new File(file)
 //        inputStream = new FileInputStream(theFile)
@@ -46,8 +48,9 @@ class TableDDLBuilder {
 
 
         def cellValue = []
-        def vRow = []
-            def isFirstRow = true
+        def fieldNameList = []
+        def isFirstRow = true
+        def fieldHeader = ""
 
             sheet.each() { row ->
             row.each() { cell ->
@@ -56,39 +59,67 @@ class TableDDLBuilder {
                     case it.CELL_TYPE_NUMERIC:
                        if(HSSFDateUtil.isCellDateFormatted(it))
                        {
-                         // cellValue.add(it.getDateCellValue())
-                           print(it.getDateCellValue())
+
+                           def date = it.getDateCellValue()
+                           def dateValue = date.format("MM/dd/yyyy")
+                           cellValue.add("'${dateValue}'")
+                           //print(dateValue)
                        }
                        else
                        {
-                         // cellValue.add(it.getNumericCellValue())
-                          print(it.getNumericCellValue())
+                          cellValue.add(it.getNumericCellValue())
+                          //print(it.getNumericCellValue())
                        }
                     break;
                     case it.CELL_TYPE_STRING:
-                        //cellValue.add(it.getStringCellValue())
-                        print(it.getStringCellValue())
+
+                        cellValue.add("'${it.getStringCellValue()}'")
+                        //print(it.getStringCellValue())
                     break;
                 }
             }
 
          }
 
-     println ""
+
            if (isFirstRow)
            {
                isFirstRow = false
-              println("========================================== First Row ==============================================")
+               //cellValue.each() {
+                    //def replaceValue = it.replaceAll(" ","_")
+                    //def upperCase = rep
+                    //
+                    //
+                    // laceValue.toUpperCase()
+                    //fieldHeader.add(upperCase)
+                  // println it
+               //}
+
+               //println fieldHeader
            }
            else
            {
-               println("========================================== Row ==============================================")
+               // def val =  fieldHeader.substring(0, fieldHeader.length()-1)
 
+               println "insert ${tableName} (${convertListToCSV(fieldName)}) values (${convertListToCSV(cellValue)}) "
+               cellValue = []
+              // println("========================================== Row ==============================================")
+              //cellValue = []
+             // println rowValue
            }
 
 
             }
 
+    }
+
+    def convertListToCSV(def list)
+    {
+         def listStr = ""
+         list.each { cell ->
+                   listStr += "${cell},"
+              }
+        return listStr.substring(0, listStr.length()-1)
     }
 
 
@@ -165,7 +196,7 @@ class TableDDLBuilder {
 
         }
 
-        def tableName = "STAGING_${String.format('%tY%<tm%<td_%<tN', new Date())}"
+        tableName = "STAGING_${String.format('%tY%<tm%<td_%<tN', new Date())}"
 
         def createDDL =  ""
         if (colAndVarcharType.length() > 0)
