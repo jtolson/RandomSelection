@@ -3,6 +3,13 @@ package com.tci.utilities;
 import com.tci.utilities.*
 import org.junit.After
 import org.junit.Before
+import org.hibernate.Session
+import org.hibernate.SessionFactory
+import org.hibernate.cfg.Configuration
+import org.springframework.orm.hibernate3.SessionFactoryUtils
+import org.springframework.orm.hibernate3.SessionHolder
+import org.springframework.transaction.support.TransactionSynchronizationManager
+import org.hibernate.Query
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,23 +18,51 @@ import org.junit.Before
  * Time: 9:26 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ExcelBuilderTest {
+public class ExcelBuilderTest extends  GroovyTestCase{
+
+      SessionFactory sessionFactory
+      Session session
+
     @Before
     public void setUp() throws Exception {
+       super.setUp();
+       def Configuration cfg = new Configuration()
+            .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+            .setProperty("hibernate.connection.url", "jdbc:mysql://localhost/test")
+            .setProperty("hibernate.connection.username", "root")
+            .setProperty("hibernate.connection.password", "")
+
+
+
+       SessionFactory sessionFactory = cfg.buildSessionFactory()
+       session = sessionFactory.openSession();
+
 
     }
 
     @After
     public void tearDown() throws Exception {
-
+        session.close()
     }
 
     public void testDDL()
     {
         //ExcelBuilder  a = new ExcelBuilder("/Users/jtolson/ExampleFile.xls")
 
+
+
+
+
         def t = new TableDDLBuilder("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
-        println t.getTableDDL("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
-        t.getSpreadSheetValues()
+        def createTableDLL =  t.getTableDDL("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
+
+        println   createTableDLL
+
+
+        def query = session.createSQLQuery(createTableDLL);
+        println "Query Result: ${query.executeUpdate()}"
+
+
+        t.getSpreadSheetValues(session)
     }
 }

@@ -11,10 +11,21 @@ hibernate {
 }
 // environment specific settings
 environments {
+//    development {
+    //        dataSource {
+    //            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+    //            url = "jdbc:h2:mem:devDb;MVCC=TRUE"
+    //        }
+    //    }
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE"
+            pooled = true
+            dbCreate = "update"
+            url = "jdbc:mysql://localhost/test"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            username = "root"
+            password = ""
         }
     }
     test {
@@ -28,16 +39,16 @@ environments {
             dbCreate = "update"
             url = "jdbc:h2:prodDb;MVCC=TRUE"
             // For MySQL production scenarios enable the following settings
-//          pooled = true
-//          properties {
-//               minEvictableIdleTimeMillis=1800000
-//               timeBetweenEvictionRunsMillis=1800000
-//               numTestsPerEvictionRun=3
-//               testOnBorrow=true
-//               testWhileIdle=true
-//               testOnReturn=true
-//               validationQuery="SELECT 1"
-//          }
+            //          pooled = true
+            //          properties {
+            //               minEvictableIdleTimeMillis=1800000
+            //               timeBetweenEvictionRunsMillis=1800000
+            //               numTestsPerEvictionRun=3
+            //               testOnBorrow=true
+            //               testWhileIdle=true
+            //               testOnReturn=true
+            //               validationQuery="SELECT 1"
+            //          }
         }
     }
 }

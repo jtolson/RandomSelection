@@ -1,4 +1,3 @@
-
 /**
  * Created by IntelliJ IDEA.
  * User: jtolson
@@ -27,8 +26,7 @@ class TableDDLBuilder {
     def tableName = ""
 
 
-    TableDDLBuilder(String file)
-    {
+    TableDDLBuilder(String file) {
         theFile = new File(file)
         inputStream = new FileInputStream(theFile)
 
@@ -36,15 +34,13 @@ class TableDDLBuilder {
         sheet = workbook.getSheetAt(0)
     }
 
-    def getSpreadSheetValues()
-    {
+    def getSpreadSheetValues(def session) {
 //        def theFile = new File(file)
-//        inputStream = new FileInputStream(theFile)
-//
-//        workbook = new HSSFWorkbook(inputStream)
-//        sheet = workbook.getSheetAt(0)
+        //        inputStream = new FileInputStream(theFile)
+        //
+        //        workbook = new HSSFWorkbook(inputStream)
+        //        sheet = workbook.getSheetAt(0)
         //header = sheet.getRow(0)
-
 
 
         def cellValue = []
@@ -52,157 +48,148 @@ class TableDDLBuilder {
         def isFirstRow = true
         def fieldHeader = ""
 
-            sheet.each() { row ->
+        sheet.each() { row ->
             row.each() { cell ->
                 cell.each() {
-                switch (it.getCellType()) {
-                    case it.CELL_TYPE_NUMERIC:
-                       if(HSSFDateUtil.isCellDateFormatted(it))
-                       {
+                    switch (it.getCellType()) {
+                        case it.CELL_TYPE_NUMERIC:
+                            if (HSSFDateUtil.isCellDateFormatted(it)) {
 
-                           def date = it.getDateCellValue()
-                           def dateValue = date.format("MM/dd/yyyy")
-                           cellValue.add("'${dateValue}'")
-                           //print(dateValue)
-                       }
-                       else
-                       {
-                          cellValue.add(it.getNumericCellValue())
-                          //print(it.getNumericCellValue())
-                       }
-                    break;
-                    case it.CELL_TYPE_STRING:
+                                def date = it.getDateCellValue()
+                                def dateValue = date.format("MM/dd/yyyy")
+                                cellValue.add("'${dateValue}'")
+                                //print(dateValue)
+                            }
+                            else {
+                                cellValue.add(it.getNumericCellValue())
+                                //print(it.getNumericCellValue())
+                            }
+                            break;
+                        case it.CELL_TYPE_STRING:
 
-                        cellValue.add("'${it.getStringCellValue()}'")
-                        //print(it.getStringCellValue())
-                    break;
+                            cellValue.add("'${it.getStringCellValue()}'")
+                            //print(it.getStringCellValue())
+                            break;
+                    }
                 }
-            }
-
-         }
-
-
-           if (isFirstRow)
-           {
-               isFirstRow = false
-               //cellValue.each() {
-                    //def replaceValue = it.replaceAll(" ","_")
-                    //def upperCase = rep
-                    //
-                    //
-                    // laceValue.toUpperCase()
-                    //fieldHeader.add(upperCase)
-                  // println it
-               //}
-
-               //println fieldHeader
-           }
-           else
-           {
-               // def val =  fieldHeader.substring(0, fieldHeader.length()-1)
-
-               println "insert ${tableName} (${convertListToCSV(fieldName)}) values (${convertListToCSV(cellValue)}) "
-               cellValue = []
-              // println("========================================== Row ==============================================")
-              //cellValue = []
-             // println rowValue
-           }
-
 
             }
 
-    }
 
-    def convertListToCSV(def list)
-    {
-         def listStr = ""
-         list.each { cell ->
-                   listStr += "${cell},"
-              }
-        return listStr.substring(0, listStr.length()-1)
-    }
+            if (isFirstRow)
+            {
+                isFirstRow = false
+                println "isFirstRow: insert into ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)}) "
+            }
+            else
+            {
+                // def val =  fieldHeader.substring(0, fieldHeader.length()-1)
+
+                def insertStr = "INSERT INTO ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)}) "
+                //def insertStr = "INSERT INTO ${tableName} (${convertListToCSV(cellValue)}) "
+                try
+                {
+                   session.execute(insertStr)
+                }
+                catch (Exception e)
+                {
+                    println "${e.message}: insertStr"
+                }
+
+                cellValue = []
+            }
+            }
+
+        }
+
+        def convertListToCSV(def list)
+        {
+            def listStr = ""
+            list.each { cell ->
+                listStr += "${cell},"
+            }
+            return listStr.substring(0, listStr.length() - 1)
+        }
 
 
-    def getTableDDL(String file)
-    {
+        def getTableDDL(String file) {
 
-        //def cellType = []
-        //def cellName = []
+            //def cellType = []
+            //def cellName = []
 
-        //def theFile = new File(file)
-        //inputStream = new FileInputStream(theFile)
+            //def theFile = new File(file)
+            //inputStream = new FileInputStream(theFile)
 
-        //workbook = new HSSFWorkbook(inputStream)
-        sheet = workbook.getSheetAt(0)
-        header = sheet.getRow(0)
+            //workbook = new HSSFWorkbook(inputStream)
+            sheet = workbook.getSheetAt(0)
+            header = sheet.getRow(0)
 //
 
 
-        header.each() {
-            //            if (it.getCellType() == it.CELL_TYPE_NUMERIC)
-            //               println("${it.getCellType}           ${it.getNumericCellValue()};")
+            header.each() {
+                //            if (it.getCellType() == it.CELL_TYPE_NUMERIC)
+                //               println("${it.getCellType}           ${it.getNumericCellValue()};")
 
-            if (it.getCellType() == it.CELL_TYPE_STRING ){
-                // println("${it.getCellType()}      ${it.getStringCellValue()};")
-                def value = it.getStringCellValue();
-                def replaceValue = value.replaceAll(" ","_")
-                def upperCase = replaceValue.toUpperCase()
-                // cellName.add(it.getStringCellValue().replaceAll(" ","_").toUpperCase());
+                if (it.getCellType() == it.CELL_TYPE_STRING) {
+                    // println("${it.getCellType()}      ${it.getStringCellValue()};")
+                    def value = it.getStringCellValue();
+                    def replaceValue = value.replaceAll(" ", "_")
+                    def upperCase = replaceValue.toUpperCase()
+                    // cellName.add(it.getStringCellValue().replaceAll(" ","_").toUpperCase());
 
 
-                //println "upperCase: ${upperCase}"
+                    //println "upperCase: ${upperCase}"
 
-                fieldName.add(upperCase);
+                    fieldName.add(upperCase);
+                }
             }
-        }
 
 
-        def firstRow = sheet.getRow(1)
-        firstRow.each() {
-            if (it.getCellType() == it.CELL_TYPE_NUMERIC)
-            if(HSSFDateUtil.isCellDateFormatted(it))
-            cellType.add(99)
+            def firstRow = sheet.getRow(1)
+            firstRow.each() {
+                if (it.getCellType() == it.CELL_TYPE_NUMERIC)
+                    if (HSSFDateUtil.isCellDateFormatted(it))
+                        cellType.add(99)
 
-            cellType.add(it.getCellType())
-        }
-
-
-        //CELL_TYPE_BLANK = 3
-        //CELL_TYPE_STRING = 1
-        //CELL_TYPE_NUMERIC = 0
-
-        String colAndVarcharType = "";
-        def fieldType = ""
-        int count = 0
-        fieldName.each() {
-
-
-            switch(cellType[count]) {
-                case 1:
-                fieldType = "VARCHAR(100)"
-                break
-                case 0:
-                fieldType = "NUMERIC"
-                break
-                case 99:
-                fieldType = "DATE"
-                break
-                case 3:
-                fieldType = "VARCHAR(100)"
-                break
+                cellType.add(it.getCellType())
             }
-            count = count + 1
-            colAndVarcharType = colAndVarcharType + it + " " + fieldType + ","
 
+            //CELL_TYPE_BLANK = 3
+            //CELL_TYPE_STRING = 1
+            //CELL_TYPE_NUMERIC = 0
+
+            String colAndVarcharType = "";
+            def fieldType = ""
+            int count = 0
+            fieldName.each() {
+
+
+                switch (cellType[count]) {
+                    case 1:
+                        fieldType = "VARCHAR(100)"
+                        break
+                    case 0:
+                        fieldType = "NUMERIC"
+                        break
+                    case 99:
+                        fieldType = "DATE"
+                        break
+                    case 3:
+                        fieldType = "VARCHAR(100)"
+                        break
+                }
+                count = count + 1
+                colAndVarcharType = colAndVarcharType + it + " " + fieldType + ","
+
+            }
+
+            tableName = "STAGING_${String.format('%tY%<tm%<td_%<tN', new Date())}"
+
+            def createDDL = ""
+            if (colAndVarcharType.length() > 0)
+                createDDL = "CREATE TABLE ${tableName} (${colAndVarcharType.substring(0, colAndVarcharType.length() - 1)})"
+
+            return createDDL
         }
 
-        tableName = "STAGING_${String.format('%tY%<tm%<td_%<tN', new Date())}"
-
-        def createDDL =  ""
-        if (colAndVarcharType.length() > 0)
-            createDDL = "CREATE TABLE ${tableName} (${colAndVarcharType.substring(0,colAndVarcharType.length()-1)})"
-
-        return createDDL
     }
-
-}
