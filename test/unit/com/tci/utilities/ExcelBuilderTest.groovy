@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils
 import org.springframework.orm.hibernate3.SessionHolder
 import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.hibernate.Query
+import groovy.sql.Sql
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,27 +23,29 @@ public class ExcelBuilderTest extends  GroovyTestCase{
 
       SessionFactory sessionFactory
       Session session
-
+      def sql
     @Before
     public void setUp() throws Exception {
        super.setUp();
-       def Configuration cfg = new Configuration()
-            .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
-            .setProperty("hibernate.connection.url", "jdbc:mysql://localhost/test")
-            .setProperty("hibernate.connection.username", "root")
-            .setProperty("hibernate.connection.password", "")
+//       def Configuration cfg = new Configuration()
+//            .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
+//            .setProperty("hibernate.connection.url", "jdbc:mysql://localhost/test")
+//            .setProperty("hibernate.connection.username", "root")
+//            .setProperty("hibernate.connection.password", "")
+//
+//
+//
+//       SessionFactory sessionFactory = cfg.buildSessionFactory()
+//       session = sessionFactory.openSession();
 
-
-
-       SessionFactory sessionFactory = cfg.buildSessionFactory()
-       session = sessionFactory.openSession();
-
+       sql = Sql.newInstance( 'jdbc:mysql://localhost/test', 'root',
+                       '', 'com.mysql.jdbc.Driver' )
 
     }
 
     @After
     public void tearDown() throws Exception {
-        session.close()
+       // session.close()
     }
 
     public void testDDL()
@@ -59,10 +62,12 @@ public class ExcelBuilderTest extends  GroovyTestCase{
         println   createTableDLL
 
 
-        def query = session.createSQLQuery(createTableDLL);
-        println "Query Result: ${query.executeUpdate()}"
+        //def query = session.createSQLQuery(createTableDLL);
+        sql.execute(createTableDLL.toString())
+       // println "Query Result: ${query.executeUpdate()}"
 
 
-        t.getSpreadSheetValues(session)
+
+        t.getSpreadSheetValues(sql)
     }
 }

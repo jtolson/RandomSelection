@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.tci.utilities
-
+import groovy.sql.Sql
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFRow
 import org.apache.poi.hssf.usermodel.HSSFCell
@@ -34,7 +34,7 @@ class TableDDLBuilder {
         sheet = workbook.getSheetAt(0)
     }
 
-    def getSpreadSheetValues(def session) {
+    def getSpreadSheetValues(def sql) {
 //        def theFile = new File(file)
         //        inputStream = new FileInputStream(theFile)
         //
@@ -56,7 +56,7 @@ class TableDDLBuilder {
                             if (HSSFDateUtil.isCellDateFormatted(it)) {
 
                                 def date = it.getDateCellValue()
-                                def dateValue = date.format("MM/dd/yyyy")
+                                def dateValue = date.format("yyyy-MM-d")
                                 cellValue.add("'${dateValue}'")
                                 //print(dateValue)
                             }
@@ -79,25 +79,29 @@ class TableDDLBuilder {
             if (isFirstRow)
             {
                 isFirstRow = false
-                println "isFirstRow: insert into ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)}) "
+                //println "isFirstRow: insert into ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)}) "
             }
             else
             {
                 // def val =  fieldHeader.substring(0, fieldHeader.length()-1)
 
-                def insertStr = "INSERT INTO ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)}) "
+                def insertStr = """INSERT INTO ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)})"""
+                println insertStr
+
                 //def insertStr = "INSERT INTO ${tableName} (${convertListToCSV(cellValue)}) "
                 try
                 {
-                   session.execute(insertStr)
+                    sql.execute(insertStr.toString())
+                   //session.execute(insertStr)
                 }
                 catch (Exception e)
                 {
                     println "${e.message}: insertStr"
                 }
 
-                cellValue = []
+
             }
+            cellValue = []
             }
 
         }
