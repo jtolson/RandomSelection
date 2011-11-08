@@ -53,22 +53,22 @@ class TableDDLBuilder {
                 cell.each() {
                     switch (it.getCellType()) {
                         case it.CELL_TYPE_NUMERIC:
-                            if (HSSFDateUtil.isCellDateFormatted(it)) {
-
+                            if (HSSFDateUtil.isCellDateFormatted(it))
+                            {
                                 def date = it.getDateCellValue()
                                 def dateValue = date.format("yyyy-MM-d")
                                 cellValue.add("'${dateValue}'")
-                                //print(dateValue)
                             }
-                            else {
+                            else
+                            {
                                 cellValue.add(it.getNumericCellValue())
-                                //print(it.getNumericCellValue())
                             }
                             break;
                         case it.CELL_TYPE_STRING:
-
                             cellValue.add("'${it.getStringCellValue()}'")
-                            //print(it.getStringCellValue())
+                            break;
+                        case it.CELL_TYPE_BLANK:
+                            cellValue.add("''")
                             break;
                     }
                 }
@@ -86,9 +86,9 @@ class TableDDLBuilder {
                 // def val =  fieldHeader.substring(0, fieldHeader.length()-1)
 
                 def insertStr = """INSERT INTO ${tableName} (${convertListToCSV(fieldName)}) VALUES (${convertListToCSV(cellValue)})"""
+
                 println insertStr
 
-                //def insertStr = "INSERT INTO ${tableName} (${convertListToCSV(cellValue)}) "
                 try
                 {
                     sql.execute(insertStr.toString())
@@ -96,7 +96,7 @@ class TableDDLBuilder {
                 }
                 catch (Exception e)
                 {
-                    println "${e.message}: insertStr"
+                    println "${e.message}"
                 }
 
 
@@ -149,14 +149,14 @@ class TableDDLBuilder {
             }
 
 
-            def firstRow = sheet.getRow(1)
-            firstRow.each() {
-                if (it.getCellType() == it.CELL_TYPE_NUMERIC)
-                    if (HSSFDateUtil.isCellDateFormatted(it))
-                        cellType.add(99)
-
-                cellType.add(it.getCellType())
-            }
+//            def firstRow = sheet.getRow(1)
+//            firstRow.each() {
+//                if (it.getCellType() == it.CELL_TYPE_NUMERIC)
+//                    if (HSSFDateUtil.isCellDateFormatted(it))
+//                        cellType.add(99)
+//
+//                cellType.add(it.getCellType())
+//            }
 
             //CELL_TYPE_BLANK = 3
             //CELL_TYPE_STRING = 1
@@ -164,25 +164,27 @@ class TableDDLBuilder {
 
             String colAndVarcharType = "";
             def fieldType = ""
-            int count = 0
+            //int count = 0
             fieldName.each() {
 
+//
+//                switch (cellType[count]) {
+//                    case 1:
+//                        fieldType = "VARCHAR(100)"
+//                        break
+//                    case 0:
+//                        fieldType = "NUMERIC"
+//                        break
+//                    case 99:
+//                        fieldType = "DATE"
+//                        break
+//                    case 3:
+//                        fieldType = "VARCHAR(100)"
+//                        break
+//                }
 
-                switch (cellType[count]) {
-                    case 1:
-                        fieldType = "VARCHAR(100)"
-                        break
-                    case 0:
-                        fieldType = "NUMERIC"
-                        break
-                    case 99:
-                        fieldType = "DATE"
-                        break
-                    case 3:
-                        fieldType = "VARCHAR(100)"
-                        break
-                }
-                count = count + 1
+                fieldType = "VARCHAR(100)"
+                //count = count + 1
                 colAndVarcharType = colAndVarcharType + it + " " + fieldType + ","
 
             }

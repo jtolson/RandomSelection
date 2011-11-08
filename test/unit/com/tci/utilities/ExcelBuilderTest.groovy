@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.SessionHolder
 import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.hibernate.Query
 import groovy.sql.Sql
+import com.tci.services.DBBuilderService
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,6 +25,9 @@ public class ExcelBuilderTest extends  GroovyTestCase{
       SessionFactory sessionFactory
       Session session
       def sql
+
+    DBBuilderService dbBuilderService
+
     @Before
     public void setUp() throws Exception {
        super.setUp();
@@ -37,7 +41,7 @@ public class ExcelBuilderTest extends  GroovyTestCase{
 //
 //       SessionFactory sessionFactory = cfg.buildSessionFactory()
 //       session = sessionFactory.openSession();
-
+       dbBuilderService = new DBBuilderService()
        sql = Sql.newInstance( 'jdbc:mysql://localhost/test', 'root',
                        '', 'com.mysql.jdbc.Driver' )
 
@@ -55,19 +59,22 @@ public class ExcelBuilderTest extends  GroovyTestCase{
 
 
 
-
-        def t = new TableDDLBuilder("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
-        def createTableDLL =  t.getTableDDL("/Users/jtolson/Desktop/StudentTransfer2011Results.xls")
-
-        println   createTableDLL
+//
+//        def t = new TableDDLBuilder("/Users/jtolson/Desktop/Transfers 05072011-06142011.xls")
+//        def createTableDLL =  t.getTableDDL("/Users/jtolson/Desktop/Transfers 05072011-06142011.xls")
+//
+//        println   createTableDLL
 
 
         //def query = session.createSQLQuery(createTableDLL);
-        sql.execute(createTableDLL.toString())
+//        sql.execute(createTableDLL.toString())
        // println "Query Result: ${query.executeUpdate()}"
 
 
 
-        t.getSpreadSheetValues(sql)
+//        t.getSpreadSheetValues(sql)
+
+         dbBuilderService.ProcessXLSFile("/Users/jtolson/Desktop/Transfers 05072011-06142011.xls", sql)
+
     }
 }
