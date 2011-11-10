@@ -65,7 +65,7 @@ class TableDDLBuilder {
                             }
                             break;
                         case it.CELL_TYPE_STRING:
-                            cellValue.add("'${it.getStringCellValue()}'")
+                            cellValue.add("'${it.getStringCellValue().replaceAll("'","\\\\'")}'")
                             break;
                         case it.CELL_TYPE_BLANK:
                             cellValue.add("''")
@@ -193,7 +193,7 @@ class TableDDLBuilder {
 
             def createDDL = ""
             if (colAndVarcharType.length() > 0)
-                createDDL = "CREATE TABLE ${tableName} (${colAndVarcharType.substring(0, colAndVarcharType.length() - 1)})"
+                createDDL = "CREATE TABLE ${tableName} (id MEDIUMINT NOT NULL AUTO_INCREMENT, create_dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ${colAndVarcharType.substring(0, colAndVarcharType.length())} PRIMARY KEY (id))"
 
             return createDDL
         }

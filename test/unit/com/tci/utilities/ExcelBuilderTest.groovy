@@ -66,6 +66,7 @@ public class ExcelBuilderTest extends  GroovyTestCase{
 //        println   createTableDLL
 
 
+
         //def query = session.createSQLQuery(createTableDLL);
 //        sql.execute(createTableDLL.toString())
        // println "Query Result: ${query.executeUpdate()}"
@@ -73,6 +74,8 @@ public class ExcelBuilderTest extends  GroovyTestCase{
 
 
 //        t.getSpreadSheetValues(sql)
+
+         // select distinct school_choice_3, next_grade_level from STAGING_20111110_218000000 where school_choice_3 != '' order by school_choice_3;
 
          dbBuilderService.ProcessXLSFile("/Users/jtolson/Desktop/Transfers 05072011-06142011.xls", sql)
 
